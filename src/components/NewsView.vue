@@ -1,28 +1,32 @@
 <template>
-    
+    <div>
+      <h1>{{ title }}</h1>
+      <div>
+        {{ url }}
+        <br/>
+        <br/>
+        {{ content }}
+      </div>
+    </div>
 </template>
 <script>
 export default {
   created() {
-    this.load()
+  this.fetchData()
   },
   name: 'home',
   data () {
     return {
-      site:[],
-      news:[]
+      title:'',
+      content:'',
+      url:''
     }
   },
   methods:{
-    load(){
-    //   this.axios
-    //             .get('/api/allSite')
-    //             .then(response => {
-    //                 this.site = response.data;
-    //                 console.log(this.site);
-    //             })
-    //             .catch(error => (console.log("error " + error)));
-
+    fetchData(){
+      this.title = this.$route.params.title
+      this.content = this.$route.params.content
+      this.url = this.$route.params.url
     }
   }
 }

@@ -10,7 +10,9 @@
           style="max-width: 20rem;"
           class="mb-2">
         <p class="card-text">
-          {{n.title}}.
+           <router-link :to="{ name: 'NewsView', params: {title:n.title, content:n.content, url:n.url}}">
+                   {{n.title}}
+            </router-link>
         </p>
       </b-card>
     </b-card-group>
@@ -19,6 +21,9 @@
 
 <script>
 export default {
+  created(){
+    this.fetchData(this.$route.params.site)
+  },
   name: 'home',
   data () {
     return {
