@@ -1,61 +1,52 @@
 <template>
    <div>
-     <h1>teste</h1>
-     <b-card-group columns>
-  <b-card v-for="n in news" title="" :key="n.url"
+   <div v-if="loading">loading...</div>
+    <b-card-group columns>
+      <b-card v-for="n in news" title="" :key="n.url"
           img-src="https://picsum.photos/600/300/?image=25"
           img-alt="Image"
           img-top
           tag="article"
           style="max-width: 20rem;"
           class="mb-2">
-    <p class="card-text">
-      {{n.title}}.
-    </p>
-    
-  </b-card>
-   </b-card-group>
+        <p class="card-text">
+          {{n.title}}.
+        </p>
+      </b-card>
+    </b-card-group>
    </div>
 </template>
 
 <script>
 export default {
-  mounted() {
-    this.load()
-  },
-  beforeRouteEnter (to, from, next) {
-   load()
-  },
-  // when route changes and this component is already rendered,
-  // the logic will be slightly different.
-  beforeRouteUpdate (to, from, next) {
-   load()
-  },
   name: 'home',
   data () {
     return {
+      loading: false,
       site:[],
-      news:[]
+      news:[],
+      url: null,
+      error: null
     }
   },
   methods:{
-    load(){
-      console.log(this.$route.params.obj)
-
-    },
-    loadNews(site){      
+    fetchData(site){
+      this.url='/api/site/'+site+'/news'
+      this.news ='';
+      this.loading=true;
       this.axios
-                .get('/api/site/'+site+'/news')
-                .then(response => {
-                    this.news = response.data;
-                    console.log(this.site);
-                })
-                .catch(error => (console.log("error " + error)));
-
+        .get(this.url)
+        .then(response => {
+          this.news = response.data;
+          this.loading=false;
+          })
+        .catch(error => (console.log("error " + error)));
     },
-    
   },
- 
+  watch: {
+      $route: function (newRoute, oldRoute) {
+        this.fetchData(this.$route.params.site)
+      }
+    }
 }
 </script>
-

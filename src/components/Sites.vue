@@ -1,14 +1,13 @@
 <template>
     <b-list-group>
         <b-list-group-item v-for="s in site" :key="s.name">
-            <router-link class="btn btn-simple btn-warning btn-xs btn-icon edit" :to="{ name: 'Home', params: {obj:s.name}} " replace>
+            <router-link class="btn btn-simple btn-warning btn-xs btn-icon edit" :to="{ name: 'Home', params: {site:s.name}}">
                    {{s.name}}
             </router-link>
 
         </b-list-group-item> 
     </b-list-group>
 </template>
-
 
 <script>
 export default {
@@ -25,13 +24,12 @@ export default {
   methods:{
     load(){
       this.axios
-                .get('/api/allSite')
-                .then(response => {
-                    this.site = response.data;                    
-                })
-                .catch(error => (console.log("error " + error)));
-
+        .get('/api/allSite')
+        .then(response => {
+          this.site = response.data;
+          })
+        .catch(error => (console.log("error " + error)));
     },
-  }
+  },
 }
 </script>
