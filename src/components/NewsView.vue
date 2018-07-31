@@ -1,8 +1,12 @@
 <template>
     <div>
       <h1>{{ title }}</h1>
+      <h3>{{ subTitle }}</h3>
       <div>
         {{ url }}
+        <br/>
+        <br/>
+        Data de publicação: {{ datePublished }}
         <br/>
         <br/>
         {{ content }}
@@ -18,8 +22,10 @@ export default {
   data () {
     return {
       title:'',
+      subTitle:'',
       content:'',
-      url:''
+      url:'',
+      datePublished:''
     }
   },
   methods:{
@@ -27,6 +33,8 @@ export default {
       this.title = this.$route.params.title
       this.content = this.$route.params.content
       this.url = this.$route.params.url
+      this.subTitle = this.$route.params.subTitle
+      this.datePublished = this.$route.params.datePublished
     }
   }
 }

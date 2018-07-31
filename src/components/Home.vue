@@ -10,7 +10,7 @@
           style="max-width: 20rem;"
           class="mb-2">
         <p class="card-text">
-           <router-link :to="{ name: 'NewsView', params: {title:n.title, content:n.content, url:n.url}}">
+           <router-link :to="{ name: 'NewsView', params: {title:n.title, content:n.content, url:n.url, datePublished:n.datePublished}}">
                    {{n.title}}
             </router-link>
         </p>
