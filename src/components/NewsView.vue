@@ -12,7 +12,12 @@
         {{ news.content }}
            <br/>
         <br/>
-        <a href="#"  v-on:click="classifyPositive"> Positive</a>
+        <a href="#"  v-on:click="classifyPositive">
+          <img style="width:45px; heght:45px" src="/static/ok.jpeg"/>
+        </a>
+        <a href="#"  v-on:click="classifyNegative">
+          <img style="width:45px; heght:45px" src="/static/fake.png"/>
+        </a>
       </div>
     </div>
 </template>
@@ -44,13 +49,21 @@ export default {
       this.news.subTitle = this.$route.params.subTitle
       this.news.datePublished = this.$route.params.datePublished
     },
-    classifyPositive(){
+    classifyPositive(){      
+      this.news.tipo='Original'
+      this.data=JSON.stringify({url:this.news.url, tipo:this.news.tipo})      
+      this.post(this.data)
+
+    },
+    classifyNegative(){
+     this.news.tipo='Fake'
+      this.data=JSON.stringify({url:this.news.url, tipo:this.news.tipo})      
+      this.post(this.data)
+    },
+    post(data){
       this.url='/api/classify/news'
-      this.news.tipo='Fake'
-      this.data=JSON.stringify({url:this.news.url, tipo:this.news.tipo})
-      console.log(this.data);
       this.axios      
-        .post(this.url,this.data, {
+        .post(this.url,data, {
                         headers: {
                             "Content-type": "application/json"
                         }
@@ -61,16 +74,6 @@ export default {
                             this.notify('danger', 'Erro ao obter os dados !', 'ti-close')
                             console.log(error);
                         })
-
-    },
-    classifyNegative(){
-      this.axios
-        .post(this.url)
-        .then(response => {
-          this.news = response.data;
-          this.loading=false;
-          })
-        .catch(error => (console.log("error " + error)));
     }
   }
 }

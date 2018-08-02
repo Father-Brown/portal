@@ -13,6 +13,12 @@
            <router-link :to="{ name: 'NewsView', params: {title:n.title, content:n.content, url:n.url, datePublished:n.datePublished}}">
                    {{n.title}}
             </router-link>
+            
+          <img v-if="n.target == 'Original'" style="width:45px; heght:45px" src="/static/ok.jpeg"/>
+        
+        
+          <img v-if="n.target == 'Fake'" style="width:45px; heght:45px" src="/static/fake.png"/>
+        
         </p>
       </b-card>
     </b-card-group>
